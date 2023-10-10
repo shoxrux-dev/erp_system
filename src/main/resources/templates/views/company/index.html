@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="eng"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Company</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="container mx-auto md:px-6 mb-10" layout:fragment="body">
+    <div class="my-2">
+        <a th:href="@{/company/add}" class="underline hover:text-blue-600">add new company</a>
+    </div>
+    <div class="flex flex-col" th:if="${not #lists.isEmpty(companies.getContent())}">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full">
+                <div class="overflow-hidden border-t border-r border-l">
+                    <table class="min-w-full text-center text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Updated At</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="company : ${companies.getContent()}" class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap font-medium" th:text="${company.getId()}"></td>
+                            <td class="whitespace-nowrap" th:text="${company.getName()}"></td>
+                            <td class="whitespace-nowrap" th:text="${company.getCreatedAt()}"></td>
+                            <td class="whitespace-nowrap" th:text="${company.getUpdatedAt()}"></td>
+                            <td class="whitespace-nowrap">
+                                <a th:href="@{/company/edit/{id}(id=${company.getId()})}"
+                                   class="underline mr-1 hover:text-blue-600">edit</a>
+                                <a th:href="@{/company/delete/{id}(id=${company.getId()})}"
+                                   class="underline hover:text-blue-600">delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" th:if="${companies.getTotalPages() > 0}"
+             class="flex justify-end my-2">
+            <ul class="list-style-none flex">
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${companies.getPageNum() == 0} ? 'pointer-events-none ')"
+                       th:href="@{/company(pageNum=${companies.getPageNum()-1})}">Previous</a>
+                </li>
+                <li th:each="pageNumber : ${#numbers.sequence(0, companies.getTotalPages() - 1)}">
+                    <a th:href="@{/company(pageNum=${pageNumber})}" th:text="${pageNumber}"
+                       th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${pageNumber == companies.getPageNum()} ? 'underline font-bold')"></a>
+                </li>
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${companies.isLast()} ? 'pointer-events-none ')"
+                       th:href="@{/company(pageNum=${companies.getPageNum()+1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <p th:if="${#lists.isEmpty(companies.getContent())}">
+        Companies not found.
+    </p>
+</div>
+</body>
+</html>

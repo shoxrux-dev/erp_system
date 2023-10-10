@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="eng"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+
+    <title>Incoming Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="container mx-auto md:px-6" layout:fragment="body">
+    <div class="my-2">
+        <a th:href="@{/incoming-product/add}"  class="underline hover:text-blue-600">new incoming-product</a>
+    </div>
+    <div class="flex flex-col" th:if="${!#lists.isEmpty(incomingProduct.getContent())}">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full">
+                <div class="overflow-hidden border-t border-r border-l">
+                    <table class="min-w-full text-center text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Company</th>
+                            <th scope="col">Inventory</th>
+                            <th scope="col">Count</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Updated At</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="incomingProductItem : ${incomingProduct.getContent()}" class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap font-medium" th:text="${incomingProductItem.getId()}"></td>
+                            <td class="whitespace-nowrap" th:text="${incomingProductItem.getProductName()}"></td>
+                            <td class="whitespace-nowrap" th:text="${incomingProductItem.getCompanyName()}"></td>
+                            <td class="whitespace-nowrap" th:text="${incomingProductItem.getInventoryName()}"></td>
+                            <td class="whitespace-nowrap" th:text="${incomingProductItem.getCount()}"></td>
+                            <td class="whitespace-nowrap" th:text="${incomingProductItem.getPrice()}"></td>
+                            <td class="whitespace-nowrap" th:text="${incomingProductItem.getCreatedAt()}"></td>
+                            <td class="whitespace-nowrap" th:text="${incomingProductItem.getUpdatedAt()}"></td>
+                            <td class="whitespace-nowrap">
+                                <a th:href="@{/incoming-product/edit/{id}(id=${incomingProductItem.getId()})}"
+                                   class="underline mr-1 hover:text-blue-600">edit</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" th:if="${incomingProduct.getTotalPages() > 0}"
+             class="flex justify-end my-2">
+            <ul class="list-style-none flex">
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${incomingProduct.getPageNum() == 0} ? 'pointer-events-none ')"
+                       th:href="@{/incoming-product(pageNum=${incomingProduct.getPageNum()-1})}">Previous</a>
+                </li>
+                <li th:each="pageNumber : ${#numbers.sequence(0, incomingProduct.getTotalPages() - 1)}">
+                    <a th:href="@{/incoming-product(pageNum=${pageNumber})}" th:text="${pageNumber}"
+                       th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${pageNumber == incomingProduct.getPageNum()} ? 'underline font-bold')"></a>
+                </li>
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${incomingProduct.isLast()} ? 'pointer-events-none ')"
+                       th:href="@{/incoming-product(pageNum=${incomingProduct.getPageNum()+1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <p th:if="${#lists.isEmpty(incomingProduct.getContent())}">
+        Incoming not found.
+    </p>
+</div>
+</body>
+</html>

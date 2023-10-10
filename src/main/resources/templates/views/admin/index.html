@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="eng"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+
+<div class="container mx-auto md:px-6" layout:fragment="body">
+    <div class="mb-4">
+        <h2 class="text-4xl font-medium leading-tight">
+            Your Balance
+            <span class="inline-block whitespace-nowrap rounded-[0.27rem] bg-primary-100 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-primary-700"
+                  th:text="${account.getBalance()} + '$'"></span>
+        </h2>
+    </div>
+    <div class="flex flex-col" th:if="${!#lists.isEmpty(incomingAndOutgoingToAccount.getContent())}">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full">
+                <div class="overflow-hidden border-t border-r border-l">
+                    <table class="min-w-full text-center text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Company name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Updated At</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${incomingAndOutgoingToAccount.getContent()}" class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap font-medium" th:text="${item.getId()}"></td>
+                            <td class="whitespace-nowrap font-bold leading-none" style="color: #13522BFF" th:text="${item.getStatus()}"></td>
+                            <td class="whitespace-nowrap" th:text="${item.getCompanyName()}"></td>
+                            <td class="whitespace-nowrap" th:text="${item.getPrice()}"></td>
+                            <td class="whitespace-nowrap" th:text="${item.getCreatedAt()}"></td>
+                            <td class="whitespace-nowrap" th:text="${item.getUpdatedAt()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" th:if="${incomingAndOutgoingToAccount.getTotalPages() > 0}"
+             class="flex justify-end my-2">
+            <ul class="list-style-none flex">
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${incomingAndOutgoingToAccount.getPageNum() == 0} ? 'pointer-events-none ')"
+                       th:href="@{/dashboard(pageNum=${incomingAndOutgoingToAccount.getPageNum()-1})}">Previous</a>
+                </li>
+                <li th:each="pageNumber : ${#numbers.sequence(0, incomingAndOutgoingToAccount.getTotalPages() - 1)}">
+                    <a th:href="@{/dashboard(pageNum=${pageNumber})}" th:text="${pageNumber}"
+                       th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${pageNumber == incomingAndOutgoingToAccount.getPageNum()} ? 'underline font-bold')"></a>
+                </li>
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${incomingAndOutgoingToAccount.isLast()} ? 'pointer-events-none ')"
+                       th:href="@{/dashboard(pageNum=${incomingAndOutgoingToAccount.getPageNum()+1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <p th:if="${#lists.isEmpty(incomingAndOutgoingToAccount.getContent())}">
+        Inventories not found.
+    </p>
+</div>
+</body>
+</html>

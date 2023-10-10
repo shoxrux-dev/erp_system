@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="eng"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body layout:fragment="body">
+<div class="flex grid md:grid-cols-3">
+  <div class="px-6 py-8 lg:py-0">
+    <div th:if="${param.error_password != null}"
+            class="mb-3 hidden w-full items-center rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-800 data-[te-alert-show]:inline-flex"
+            role="alert"
+            data-te-alert-init
+            data-te-alert-show>
+      <strong class="mr-1" th:text="${param.error_password}"></strong>
+      <button
+              type="button"
+              class="ml-auto box-content rounded-none border-none p-1 text-warning-900 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              data-te-alert-dismiss
+              aria-label="Close">
+      <span
+              class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-6 w-6">
+          <path
+                  fill-rule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clip-rule="evenodd" />
+        </svg>
+      </span>
+      </button>
+    </div>
+    <div th:if="${param.success_password != null}"
+         class="mb-3 hidden w-full items-center rounded-lg bg-success-100 px-6 py-5 text-base text-success-800 data-[te-alert-show]:inline-flex"
+         role="alert"
+         data-te-alert-init
+         data-te-alert-show>
+      <strong class="mr-1" th:text="${param.success_password}"></strong>
+      <button
+              type="button"
+              class="ml-auto box-content rounded-none border-none p-1 text-warning-900 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              data-te-alert-dismiss
+              aria-label="Close">
+      <span
+              class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-6 w-6">
+          <path
+                  fill-rule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clip-rule="evenodd" />
+        </svg>
+      </span>
+      </button>
+    </div>
+    <div th:if="${param.warning_password != null}"
+         class="mb-3 hidden w-full items-center rounded-lg bg-warning-100 px-6 py-5 text-base text-warning-800 data-[te-alert-show]:inline-flex"
+         role="alert"
+         data-te-alert-init
+         data-te-alert-show>
+      <strong class="mr-1" th:text="${param.warning_password}"></strong>
+      <button
+              type="button"
+              class="ml-auto box-content rounded-none border-none p-1 text-warning-900 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              data-te-alert-dismiss
+              aria-label="Close">
+      <span
+              class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-6 w-6">
+          <path
+                  fill-rule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clip-rule="evenodd" />
+        </svg>
+      </span>
+      </button>
+    </div>
+    <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+      <div
+              class="block max-w-sm mx-auto my-auto rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+        <h1 class="font-bold text-center text-2xl mb-5">Update password</h1>
+        <form method="post" th:action="@{/update-password}">
+
+          <div class="relative mb-6" data-te-input-wrapper-init>
+            <input
+                    type="password"
+                    name="currentPassword"
+                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                    id="currentPassword"
+                    aria-describedby="emailHelp"
+                    placeholder="*******" />
+            <label
+                    for="currentPassword"
+                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+            >Current password</label>
+          </div>
+
+          <div class="relative mb-6" data-te-input-wrapper-init>
+            <input
+                    type="password"
+                    name="newPassword"
+                    class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                    id="newPassword"
+                    placeholder="*******" />
+            <label
+                    for="newPassword"
+                    class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+            >Password</label>
+          </div>
+
+          <button
+                  type="submit"
+                  class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                  data-te-ripple-init
+                  data-te-ripple-color="light">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-6 py-8 lg:py-0">
+    <div th:if="${param.error_username != null}"
+         class="mb-3 hidden w-full items-center rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-800 data-[te-alert-show]:inline-flex"
+         role="alert"
+         data-te-alert-init
+         data-te-alert-show>
+      <strong class="mr-1" th:text="${param.error_username}"></strong>
+      <button
+              type="button"
+              class="ml-auto box-content rounded-none border-none p-1 text-warning-900 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              data-te-alert-dismiss
+              aria-label="Close">
+      <span
+              class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-6 w-6">
+          <path
+                  fill-rule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clip-rule="evenodd" />
+        </svg>
+      </span>
+      </button>
+    </div>
+    <div th:if="${param.success_username != null}"
+         class="mb-3 hidden w-full items-center rounded-lg bg-success-100 px-6 py-5 text-base text-success-800 data-[te-alert-show]:inline-flex"
+         role="alert"
+         data-te-alert-init
+         data-te-alert-show>
+      <strong class="mr-1" th:text="${param.success_username}"></strong>
+      <button
+              type="button"
+              class="ml-auto box-content rounded-none border-none p-1 text-warning-900 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              data-te-alert-dismiss
+              aria-label="Close">
+      <span
+              class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-6 w-6">
+          <path
+                  fill-rule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clip-rule="evenodd" />
+        </svg>
+      </span>
+      </button>
+    </div>
+    <div th:if="${param.warning_username != null}"
+         class="mb-3 hidden w-full items-center rounded-lg bg-warning-100 px-6 py-5 text-base text-warning-800 data-[te-alert-show]:inline-flex"
+         role="alert"
+         data-te-alert-init
+         data-te-alert-show>
+      <strong class="mr-1" th:text="${param.warning_username}"></strong>
+      <button
+              type="button"
+              class="ml-auto box-content rounded-none border-none p-1 text-warning-900 opacity-50 hover:text-warning-900 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+              data-te-alert-dismiss
+              aria-label="Close">
+      <span
+              class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="h-6 w-6">
+          <path
+                  fill-rule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clip-rule="evenodd" />
+        </svg>
+      </span>
+      </button>
+    </div>
+    <div
+            class="block max-w-sm mx-auto my-auto rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+      <h1 class="font-bold text-center text-2xl mb-5">Update username</h1>
+      <form method="post" th:action="@{/update-username}">
+        <!--E-mail input-->
+        <div class="relative mb-6" data-te-input-wrapper-init>
+          <input
+                  type="text"
+                  name="newUsername"
+                  class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                  id="newUsername"
+                  aria-describedby="emailHelp"
+                  placeholder="Username" />
+          <label
+                  for="newUsername"
+                  class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+          >Username</label>
+        </div>
+
+        <button
+                type="submit"
+                class="dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]] inline-block w-full rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                data-te-ripple-init
+                data-te-ripple-color="light">
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

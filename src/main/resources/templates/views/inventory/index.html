@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="eng"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+
+    <title>Inventory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+<div class="container mx-auto md:px-6" layout:fragment="body">
+    <div class="my-2">
+        <a th:href="@{/inventory/add}" class="underline hover:text-blue-600">add new inventory</a>
+    </div>
+    <div class="flex flex-col" th:if="${!#lists.isEmpty(inventories.getContent())}">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full">
+                <div class="overflow-hidden border-t border-r border-l">
+                    <table class="min-w-full text-center text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Updated At</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="inventory : ${inventories.getContent()}" class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap font-medium" th:text="${inventory.getId()}"></td>
+                            <td class="whitespace-nowrap" th:text="${inventory.getName()}"></td>
+                            <td class="whitespace-nowrap" th:text="${inventory.getCreatedAt()}"></td>
+                            <td class="whitespace-nowrap" th:text="${inventory.getUpdatedAt()}"></td>
+                            <td class="whitespace-nowrap">
+                                <a th:href="@{/inventory/edit/{id}(id=${inventory.getId()})}"
+                                   class="underline mr-1 hover:text-blue-600">edit</a>
+                                <a th:href="@{/inventory/delete/{id}(id=${inventory.getId()})}"
+                                   class="underline hover:text-blue-600">delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="Page navigation example" th:if="${inventories.getTotalPages() > 0}"
+             class="flex justify-end my-2">
+            <ul class="list-style-none flex">
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${inventories.getPageNum() == 0} ? 'pointer-events-none ')"
+                       th:href="@{/inventory(pageNum=${inventories.getPageNum()-1})}">Previous</a>
+                </li>
+                <li th:each="pageNumber : ${#numbers.sequence(0, inventories.getTotalPages() - 1)}">
+                    <a th:href="@{/inventory(pageNum=${pageNumber})}" th:text="${pageNumber}"
+                       th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${pageNumber == inventories.getPageNum()} ? 'underline font-bold')"></a>
+                </li>
+                <li>
+                    <a th:class="'relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white ' + (${inventories.isLast()} ? 'pointer-events-none ')"
+                       th:href="@{/inventory(pageNum=${inventories.getPageNum()+1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <p th:if="${#lists.isEmpty(inventories.getContent())}">
+        Inventories not found.
+    </p>
+</div>
+</body>
+</html>

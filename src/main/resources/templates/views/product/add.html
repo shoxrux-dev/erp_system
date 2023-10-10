@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="eng"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+
+    <title>Add Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="container my-24 mx-auto md:px-6" layout:fragment="body">
+    <div
+            class="block max-w-sm my-auto rounded-lg bg-white pt-6 pl-6 pr-6 pb-10 border dark:bg-neutral-700">
+        <h1 class="font-bold text-center text-2xl mb-5">Add New Product</h1>
+        <form method="post" th:action="@{/product/add}" enctype="multipart/form-data">
+            <div class="relative mb-6" data-te-input-wrapper-init>
+                <input required
+                        type="text"
+                        name="name"
+                        class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                        id="name"
+                        aria-describedby="emailHelp"
+                        placeholder="Product name" />
+                <label
+                        for="name"
+                        class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+                >Product name</label>
+            </div>
+            <div class="relative mb-6" data-te-input-wrapper-init>
+                <input required
+                        type="file"
+                        name="image"
+                        class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+                        id="image"/>
+            </div>
+            <div class="relative mb-6" data-te-input-wrapper-init>
+                <label>
+                    <select required name="categoryId" class="py-2 px-3 pr-9 border block w-full border-gray-300 rounded-md text-sm ">
+                        <option selected value="">Select category</option>
+                        <option th:each="category : ${categories}" th:text="${category.getName()}" th:value="${category.getId()}"></option>
+                    </select>
+                </label>
+            </div>
+            <button
+                    type="submit"
+                    class="float-right underline hover:text-blue-600"
+                    data-te-ripple-init
+                    data-te-ripple-color="light">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
